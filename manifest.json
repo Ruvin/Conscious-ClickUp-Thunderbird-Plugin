@@ -1,0 +1,79 @@
+{
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "v1.0.0",
+  "author": "Ruvin Roshan",
+	"developer": {
+		"name": "Ruvin Roshan, Conscious Solutions - UK"
+	},
+  "applications": {
+    "gecko": {
+      "id": "ruvin@conscious.co.uk.extensions.thunderbird.net",
+      "strict_min_version": "68.0"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+
+  "options_ui": {
+      "page": "management.html",
+      "open_in_tab": false,
+      "browser_style": true
+    },
+    "permissions": [
+    "accountsFolders",
+    "accountsRead",
+    "activeTab",
+    "addressBooks",
+    "alarms",
+    "browserSettings",
+    "clipboardRead",
+    "clipboardWrite",
+    "compose",
+    "contextualIdentities",
+    "cookies",
+    "dns",
+    "downloads",
+    "downloads.open",
+    "geolocation",
+    "idle",
+    "management",
+    "menus",
+    "menus.overrideContext",
+    "messagesMove",
+    "messagesRead",
+    "messagesModify",
+    "nativeMessaging",
+    "notifications",
+    "pkcs11",
+    "privacy",
+    "proxy",
+    "storage",
+    "tabHide",
+    "tabs",
+    "theme",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "*://api.clickup.com/*"
+  ],
+  
+  "browser_action": { 
+    "default_title": "__MSG_clickupBrowserAction__",
+   "default_popup": "browser_action.html",
+    "browser_style": true,
+    "default_icon": "images/clickup-32px.png"
+  },
+	"icons": {
+		"64": "images/conscious.png",
+		"32": "images/conscious-32px.png",
+		"16": "images/conscious-16px.png"
+	},
+
+  "default_locale": "en",
+  "manifest_version": 2
+}

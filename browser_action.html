@@ -1,0 +1,148 @@
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
+  >
+
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <link href="styles.css" type="text/css" rel="stylesheet" />
+  <link href="styles-panel.css" type="text/css" rel="stylesheet" />
+  <script src="browser_action.js" type="application/javascript" defer=""></script>
+  </head>
+  <body>
+  <div class="panel">
+  <div class="panel-arrowUp"></div>
+  <div class="panel-section panel-section-header">
+  <div> <img src="images/conscious-32px.png"> &nbsp; </div>  
+  <div class="text-section-header">Conscious ClickUp</div>
+  </div>
+  <div class="panel-section-separator"></div>
+  <div class="panel-section panel-section-formElements">
+  <div class="panel-section panel-section-list">
+  <div class="panel-list-item disabled">
+  <div class="icon"></div>
+  <div class="text"><b>1. Select Mail List from Thunderbird</b></div>
+  <div class="text-shortcut"></div>
+  </div>
+  <div class="panel-list-item disabled">
+  <div class="icon"></div>
+  <div class="text"><b>2. Select a Task from below list</b></div>
+  <div class="text-shortcut"></div>
+  </div>
+  <div class="panel-list-item disabled">
+  <div class="icon"></div>
+  <div class="text"><b>3. Click Sync to ClickUp</b></div>
+  <div class="text-shortcut"></div>
+  </div>
+
+  <div class="panel-section-separator"></div>
+  </div>
+
+  <div>
+  <h4><u>Select an Option:</u></h4> <br/>
+  </div>
+
+
+  <div class="radioItem" >
+  <input type="radio" name="cuSearchOption" onchange="cuSearchOption(this)" id="cuSearchOption1" value="1" /><label for="cuSearchOption1">Lists Inside Folders</label></div>
+  <div class="radioItem" >
+  <input type="radio" name="cuSearchOption" onchange="cuSearchOption(this)" id="cuSearchOption2" value="2" /><label for="cuSearchOption2">Lists Outside Folders</label></div> 
+  <div class="radioItem" >
+  <input type="radio" name="cuSearchOption" onchange="cuSearchOption(this)" id="cuSearchOption3" value="3" /><label for="cuSearchOption3">Search by Task-ID or Custom-ID</label> <a title="help" href="https://docs.clickup.com/en/articles/856274-task-ids" target="_blank">?<a/></div>
+
+
+
+  <!-- List inside folders -->
+  <div class="panel-section panel-section-formElements" id="listinsidefolders" style="display: none;"> 
+  <div class="panel-formElements-item">
+  <label for="picker01">Space:</label>
+  <select class="form-control" id="space_list" name="space_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">Folder:</label>
+  <select class="form-control" id="foder_list" name="foder_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">List:</label>
+  <select class="form-control" id="listOf_list" name="listOf_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">Task:</label>
+  <select class="form-control" id="listOf_task" name="listOf_task">
+  </select>    
+  </div>
+
+  <div class="panel-section panel-section-footer"> <div class="panel-section-footer-button" id="but_close1">Cancel</div> <div class="panel-section-footer-separator"></div> <button id="but_insideList" class="panel-section-footer-button default">Sync to ClickUp</button> </div>
+
+  </div>
+  <!-- END -->
+
+
+
+
+  <!--  folderless list -->
+  <div class="panel-section panel-section-formElements" id="listoutsidefolders" style="display: none;"> 
+  <div class="panel-formElements-item">
+  <label for="picker01">Space:</label>
+  <select class="form-control" id="folderless_space_list" name="folderless_space_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">List:</label>
+  <select class="form-control" id="folderless_listOf_list" name="folderless_listOf_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">Task:</label>
+  <select class="form-control" id="folderless_listOf_task" name="folderless_listOf_task">
+  </select>    
+  </div>
+
+  <div class="panel-section panel-section-footer"> <div class="panel-section-footer-button" id="but_close2">Cancel</div> <div class="panel-section-footer-separator"></div> <button id="but_outsideList" class="panel-section-footer-button default">Sync to ClickUp</button> </div>
+  </div>
+  <!-- END -->
+
+
+
+
+
+
+  <!--  Search by Task Name -->
+  <div class="panel-section panel-section-formElements" id="listsearchbyTask" style="display: none;"> 
+  <div class="panel-section"> <input type="text" id="search_task_name" name="search_task_name" maxlength="20" placeholder="Enter Task-ID or Custom-ID" /> <div class="panel-section-footer-separator"></div><div> <button id="but_searchByTskName" name="but_searchByTskName" class="default">Search</button> 
+ 
+  </div>
+  </div>
+  <br/>  
+  <div class="panel-formElements-item">
+  <div class="row">
+  <div id="customIdTaskList_results">
+  </div>
+  </div>  
+  </div> 
+  <div class="panel-section panel-section-footer" id="searchedResultsubmit" style="display: none;"> <div class="panel-section-footer-button" id="but_close3">Cancel</div> <div class="panel-section-footer-separator"></div> <button id="but_seachTaskSubmit" name="but_seachTaskSubmit" class="panel-section-footer-button default">Sync to ClickUp</button> </div>
+  </div>
+  <!-- END -->
+
+  <div class="panel-section panel-section-list" id="loader" style="display: none;color: crimson;">
+  <div class="panel-list-item">
+  <div class="icon"></div>
+  <div  class="text">Loading...Please wait...!</div>
+  <div class="text-shortcut"><img width="16px" src="images/loading2.gif" /></div>
+  </div>
+  </div>
+  <div class="panel-section-separator"></div>
+  </div>
+  </body>
+  </html>
+

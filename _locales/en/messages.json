@@ -1,0 +1,12 @@
+{
+  "extensionDescription": {
+    "message": "A addon that use to sync Mail list to ClickUp "
+  },
+  "extensionName": {
+    "message": "Conscious ClickUp"
+  },
+  "clickupBrowserAction": {
+    "message": "ClickUp Sync"
+  }
+
+}
