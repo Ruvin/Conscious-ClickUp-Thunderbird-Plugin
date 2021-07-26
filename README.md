@@ -11,7 +11,9 @@ The add-on will be supported only for the latest versions of Thunderbird. (Min T
 Step 1 - Install the Add-on
 
 ```
-Go to [release section](https://github.com/Ruvin/Conscious-ClickUp-Thunderbird-Plugin/releases) and download the latest version of .XPI add-on. In your Thunderbird navigate to Tool > Add-ons > Extensions > Install Add-on from file to install it manually.  
+Go to [release section](https://github.com/Ruvin/Conscious-ClickUp-Thunderbird-Plugin/releases) 
+and download the latest version of .XPI add-on. In your Thunderbird navigate to Tool > Add-ons > Extensions > Install Add-on from file 
+to install it manually.  
 ```
 
 Step 2 - Configure the Add-on
@@ -35,7 +37,9 @@ Team ID:- This is your workspace id.
     go to workspace settings
     check the URL and find the ID after the '/team/xxxxxx'.
 
-once you have the above keys, use the Add-on options page (In your Thunderbird navigate to Tool > Add-ons > Extensions > Conscious ClickUp > Options) to add those keys.
+once you have the above keys, use the Add-on options page 
+(In your Thunderbird navigate to Tool > Add-ons > Extensions > Conscious ClickUp > Options) 
+to add those keys.
 ```
 
 Step 3
