@@ -2,9 +2,9 @@
 
 ### What's in this repository 
 
-Conscious ClickUp Thunderbird add-on is a extension that gives support to sync mails from Thunderbird to ClickUp.
+Conscious ClickUp Thunderbird add-on is a extension that gives support to send/archive mails from Thunderbird to ClickUp.
 
-The add-on will be supported only for the latest versions of Thunderbird. (Min TB version 70+)
+The add-on will be supported only for the latest versions of Thunderbird. (Min TB version 78+)
 
 ### Installing
 
@@ -37,15 +37,14 @@ Team ID:- This is your workspace id.
     go to workspace settings
     check the URL and find the ID after the '/team/xxxxxx'.
 
-once you have the above keys, use the Add-on options page 
+once you have the above keys, use the add-on options page for the configuration.
 (In your Thunderbird navigate to Tool > Add-ons > Extensions > Conscious ClickUp > Options) 
-to add those keys.
 ```
 
 Step 3
 
 ```
-'ClickUp Sync' icon will display in the top right-hand side of Thunderbird.
+'ClickUp Save' icon will display in the top right-hand side of Thunderbird.
 ```
 
 ## Authors
