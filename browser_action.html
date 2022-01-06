@@ -10,6 +10,20 @@
   <link href="styles.css" type="text/css" rel="stylesheet" />
   <link href="styles-panel.css" type="text/css" rel="stylesheet" />
   <script src="browser_action.js" type="application/javascript" defer=""></script>
+    <link href="assets/sweetalert2.min.css" rel="stylesheet">
+<script type="application/javascript" src="assets/sweetalert2.min.js" charset="UTF-8"></script>
+
+
+<style type="text/css">
+  
+button {
+    font: caption !important;
+    height: auto;
+}
+
+</style>
+
+
   </head>
   <body>
   <div class="panel">
@@ -52,6 +66,10 @@
   <div class="radioItem" >
   <input type="radio" name="cuSearchOption" onchange="cuSearchOption(this)" id="cuSearchOption3" value="3" /><label for="cuSearchOption3">Search by Task-ID or Custom-ID</label> <a title="help" href="https://docs.clickup.com/en/articles/856274-task-ids" target="_blank">?<a/></div>
 
+  <div class="radioItem" >
+  <input type="radio" name="cuSearchOption" onchange="cuSearchOption(this)" id="cuSearchOption4" value="4" /><label for="cuSearchOption4">Search by Tag</label></div>
+
+
 
 
   <!-- List inside folders -->
@@ -71,7 +89,8 @@
   <div class="panel-formElements-item">
   <label for="picker01">List:</label>
   <select class="form-control" id="listOf_list" name="listOf_list">
-  </select>    
+  </select>  
+     <button id="but_foder_list_createTask" name="but_foder_list_createTask" class="default">New Task</button>   
   </div>
 
   <div class="panel-formElements-item">
@@ -100,12 +119,12 @@
   <label for="picker01">List:</label>
   <select class="form-control" id="folderless_listOf_list" name="folderless_listOf_list">
   </select>    
+   <button id="but_foderless_list_createTask" name="but_foderless_list_createTask" class="default">New Task</button>   
   </div>
 
   <div class="panel-formElements-item">
   <label for="picker01">Task:</label>
-  <select class="form-control" id="folderless_listOf_task" name="folderless_listOf_task">
-  </select>    
+  <select class="form-control" id="folderless_listOf_task" name="folderless_listOf_task">  </select> 
   </div>
 
   <div class="panel-section panel-section-footer"> <div class="panel-section-footer-button" id="but_close2">Cancel</div> <div class="panel-section-footer-separator"></div> <button id="but_outsideList" class="panel-section-footer-button default">Sync to ClickUp</button> </div>
@@ -119,8 +138,8 @@
 
   <!--  Search by Task Name -->
   <div class="panel-section panel-section-formElements" id="listsearchbyTask" style="display: none;"> 
-  <div class="panel-section"> <input type="text" id="search_task_name" name="search_task_name" maxlength="20" placeholder="Enter Task-ID or Custom-ID" /> <div class="panel-section-footer-separator"></div><div> <button id="but_searchByTskName" name="but_searchByTskName" class="default">Search</button> 
- 
+  <div class="panel-section"> <input type="text" id="search_task_name" name="search_task_name" maxlength="20" placeholder="Enter Task-ID or Custom-ID" />
+   <div class="panel-section-footer-separator"></div><div> <button id="but_searchByTskName" name="but_searchByTskName" class="default">Search</button> 
   </div>
   </div>
   <br/>  
@@ -134,6 +153,41 @@
   </div>
   <!-- END -->
 
+
+
+
+
+
+  <!--  Search by TAG-->
+  <div class="panel-section panel-section-formElements" id="listoutsideTagSearch" style="display: none;"> 
+  <div class="panel-formElements-item">
+  <label for="picker01">Space:</label>
+  <select class="form-control" id="searchbytag_space_list" name="searchbytag_space_list">
+  </select>    
+  </div>
+
+  <div class="panel-formElements-item">
+  <label for="picker01">Tag:</label>
+  <select class="form-control" id="searchbytag_gettag_list" name="searchbytag_gettag_list">
+  </select>    
+   <button id="but_searchByTagName" name="but_searchByTagName" class="default">Search</button> 
+  </div>
+
+
+<br/>  
+  <div class="panel-formElements-item">
+  <div class="row">
+  <div id="customIdTagList_results"></div>
+  </div>  
+  </div> 
+
+  <div class="panel-section panel-section-footer" id="searchedResultsubmit" style=""> <div class="panel-section-footer-button" id="but_close3">Cancel</div> <div class="panel-section-footer-separator"></div> <button id="but_seachTagSubmit" name="but_seachTagSubmit" class="panel-section-footer-button default">Sync to ClickUp</button> </div>
+
+  </div>
+  <!-- TAG END -->
+
+
+
   <div class="panel-section panel-section-list" id="loader" style="display: none;color: crimson;">
   <div class="panel-list-item">
   <div class="icon"></div>
@@ -145,4 +199,7 @@
   </div>
   </body>
   </html>
+
+
+
 

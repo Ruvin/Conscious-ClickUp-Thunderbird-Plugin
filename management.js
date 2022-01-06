@@ -42,9 +42,20 @@ if(apiInput.value != "" && TeamidInput.value !=""){
   TeamidInput.disabled = false;
 
   }, Math.max(0, start + 500 - Date.now()));
-  alert('Successfully Saved!');
+ // alert('Successfully Saved!');
+   swal(
+      'Success!',
+      'Successfully Saved!',
+    
+    );
 }else{
- alert('Please Enter Required Values!'); 
+ //alert('Please Enter Required Values!'); 
+ swal(
+      'Oops...!',
+      'Please Enter Required (*) Values!',
+   
+    );
+
 }
 
 
@@ -70,15 +81,32 @@ if(apiInput.value != "" && TeamidInput.value !=""){
   getTestData(api_key, team_id)
     .then(data => {  
 if(data.err){
- alert('Incorrect API Key or TeamID.\nPlease check and try again!');
+// alert('Incorrect API Key or TeamID.\nPlease check and try again!');
+ swal(
+      'Incorrect API Key or TeamID!',
+      'Please check and try again!',
+    
+    );
+
 }
 
 if(data.teams){
      data.teams.forEach(function(item, index) { 
 if(item.id== team_id){
-  alert('Connection has been successfully established with the ClickUp!\nTeam Name: '+item.name);
+ // alert('Connection has been successfully established with the ClickUp!\nTeam Name: '+item.name);
+   swal(
+      'Success!',
+      'Connection has been successfully established with the ClickUp!\nTeam Name: '+item.name,
+     
+    );
 }else{
-  alert('Incorrect API Key or TeamID.\nPlease check and try again!');
+ // alert('Incorrect API Key or TeamID.\nPlease check and try again!');
+  swal(
+      'Incorrect API Key or TeamID!',
+      'Please check and try again!',
+     
+    );
+
 }
   });
 }
