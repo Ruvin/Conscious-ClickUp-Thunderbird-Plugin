@@ -9,11 +9,11 @@ The add-on will be supported only for the latest versions of Thunderbird. (Min T
 ### Installing
 
 Step 1 - Install the Add-on
-
+Go to [latest release section](https://github.com/Ruvin/Conscious-ClickUp-Thunderbird-Plugin/releases/latest) 
 ```
-Go to [release section](https://github.com/Ruvin/Conscious-ClickUp-Thunderbird-Plugin/releases) 
-and download the latest version of .XPI add-on. In your Thunderbird navigate to 
-Tool > Add-ons > Extensions > Install Add-on from file to install it manually.  
+Download the latest version of .XPI add-on.
+Open Thunderbird and navigate to:
+Tool > Add-ons > Extensions > Install Add-on from file to install it manually
 ```
 
 Step 2 - Configure the Add-on
