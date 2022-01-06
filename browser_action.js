@@ -48,6 +48,7 @@ document.getElementById("cuSearchOption1").checked= true;
 radioChangeHandler();
 onLoadSpaces();
 folderless_onLoadSpaces();
+searchByTag_onLoadSpaces();
 }
 
 
@@ -72,7 +73,65 @@ if(document.querySelector('input[name="searchTaskName"]:checked')){
 let url = 'task/'+selectedVal+'/comment';
 let messageList = await browser.mailTabs.getSelectedMessages();
 if (messageList.messages.length == 0) {
-  alert('Please Select least one email!');
+  //alert('Please Select least one email!');
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
+    return;
+}
+if (selectedVal == '') {
+  alert('Please Select a Task!');
+    return;
+}
+
+
+
+await messageList.messages.forEach(function(item, index) {
+ getMsgFull(item.id).then(data => {
+ let emailBodyText = data.parts[0].parts[0].body;
+
+
+sendData = {
+  "comment_text":emailBodyText, 
+  "notify_all": false
+};
+
+
+ postData(url, sendData)
+  .then(data => {
+if(data == undefined){
+  this.window.close();
+}else{
+alert('Mail List Successfully Synced!');
+}
+ });
+});
+ });
+};
+
+
+/*
+* Search Button Tag submit
+*/
+
+document.getElementById("but_seachTagSubmit").onclick = async () => {
+
+let selectedVal = '';
+if(document.querySelector('input[name="searchTagName"]:checked')){
+   selectedVal = document.querySelector('input[name="searchTagName"]:checked').value ;
+}
+ 
+let url = 'task/'+selectedVal+'/comment';
+let messageList = await browser.mailTabs.getSelectedMessages();
+if (messageList.messages.length == 0) {
+  //alert('Please Select least one email!');
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
     return;
 }
 if (selectedVal == '') {
@@ -109,8 +168,6 @@ alert('Mail List Successfully Synced!');
 
 
 
-
-
 /*
 * Submit button inside list
 */
@@ -120,7 +177,12 @@ document.getElementById("but_insideList").onclick = async () => {
 
 let messageList = await browser.mailTabs.getSelectedMessages();
 if (messageList.messages.length == 0) {
-  alert('Please Select least one email!');
+ // alert('Please Select least one email!');
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
   return;
 }
 if (selected_val == '') {
@@ -164,11 +226,21 @@ document.getElementById("but_outsideList").onclick = async () => {
 
 let messageList = await browser.mailTabs.getSelectedMessages();
 if (messageList.messages.length == 0) {
-  alert('Please Select least one email!');
+ // alert('Please Select least one email!');
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
   return;
 }
 if (selected_val == '') {
-  alert('Please Select a Task from drop-down');
+ // alert('Please Select a Task from drop-down');
+    swal(
+      'Error..!',
+      'Please Select a Task from drop-down!',
+      'error'
+    );
   return;
 }
 
@@ -264,6 +336,325 @@ option.setAttribute("class", "radioItem");
 
       });
 };
+
+
+
+
+/*TAG SEARCH SECTION*/
+
+
+
+/*
+* Dependant drop-down: Generation Spaces when page load : Search by Tag
+*/
+async function searchByTag_onLoadSpaces() {
+let TEAM_ID = sessionStorage.getItem('TEAM_ID');
+let spaceListUrl = 'team/'+TEAM_ID+'/space?archived=false';
+
+  getData(spaceListUrl)
+    .then(data => {  
+     document.querySelector("#searchbytag_space_list").innerHTML = "";
+      let option = document.createElement("OPTION");
+      let name = document.createTextNode('- Select Space -');
+      option.value = ''
+      option.appendChild(name);
+      document.querySelector('#searchbytag_space_list').appendChild(option);
+
+
+     data.spaces.forEach(function(item, index) {     
+      let option = document.createElement("OPTION");
+      let name = document.createTextNode(item.name);
+      option.value = item.id;
+      option.appendChild(name);
+      document.querySelector('#searchbytag_space_list').appendChild(option);
+    });
+      });
+};
+
+
+
+/*
+* Dependant drop-down: Generation tags : Tag Search
+*/
+document.getElementById("searchbytag_space_list").addEventListener("change", function() {
+//call function here
+let space_id = document.querySelector('#searchbytag_space_list').value;
+let get_tag_lists = 'space/'+space_id+'/tag?archived=false';
+
+
+  getData(get_tag_lists)
+    .then(data => {  
+     document.querySelector("#searchbytag_gettag_list").innerHTML = "";
+      let option = document.createElement("OPTION");
+      let name = document.createTextNode('- Select List -');
+      option.value = ''
+      option.appendChild(name);
+      document.querySelector('#searchbytag_gettag_list').appendChild(option);
+
+
+     data.tags.forEach(function(item, index) {     
+      let option = document.createElement("OPTION");
+      let name = document.createTextNode(item.name);
+     
+
+      //console.log(item.name);
+      option.value = item.name;
+      option.appendChild(name);
+      document.querySelector('#searchbytag_gettag_list').appendChild(option);
+    });
+      });
+});
+
+
+
+/*
+* Create Task - Folder-less List inside
+*/
+document.getElementById("but_foderless_list_createTask").onclick = async () => {
+ 
+
+swal({
+  title: "Are you sure?",
+  text: "Please Note: this will create a new Task on ClickUp!",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonClass: "btn-danger",
+  confirmButtonText: "OK",
+  cancelButtonText: "Cancel",
+  closeOnConfirm: false,
+  closeOnCancel: false
+}).then(function(result) {
+
+if(result === true){
+proceedTo_but_foderless_list_createTask();
+}
+});
+
+};
+
+
+
+
+/*
+* proceedTo to create task (but_foderless_list_createTask)
+*/
+async function proceedTo_but_foderless_list_createTask() {
+
+
+ let list_id = document.querySelector('#folderless_listOf_list').value;
+create_task =  'list/'+list_id+'/task';
+
+let messageList = await browser.mailTabs.getSelectedMessages();
+if (messageList.messages.length == 0) {
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
+    return;
+}
+if (list_id == '') {
+    swal(
+      'Error..!',
+      'Please Select a List from drop-down!',
+      'error'
+    );
+    return;
+}
+
+await messageList.messages.forEach(function(item, index) {
+ getMsgFull(item.id).then(data => {
+ let emailBodyText = data.parts[0].parts[0].body;
+ let subjectTxt = data.headers.subject[0];
+// console.log(data.headers.subject[0]);
+// console.log(data);
+
+
+sendData = {
+  "name":subjectTxt,
+  "content":emailBodyText
+};
+
+postData(create_task, sendData)
+  .then(data => {
+console.log(data);
+if(data == undefined){
+  this.window.close();
+}else{
+alert('New task successfully created!');
+}
+});
+
+});
+});
+
+
+}
+
+
+
+
+/*
+* Create Task - List inside folders
+*/
+document.getElementById("but_foder_list_createTask").onclick = async () => {
+ 
+swal({
+  title: "Are you sure?",
+  text: "Please Note: this will create a new Task on ClickUp!",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonClass: "btn-danger",
+  confirmButtonText: "OK",
+  cancelButtonText: "Cancel",
+  closeOnConfirm: false,
+  closeOnCancel: false
+}).then(function(result) {
+
+if(result === true){
+proceedTo_but_foder_list_createTask();
+}
+});
+
+};
+
+
+
+/*
+* proceedTo to create task (but_foder_list_createTask)
+*/
+async function proceedTo_but_foder_list_createTask() {
+
+ let list_id = document.querySelector('#listOf_list').value;
+  let folder_id = document.querySelector('#foder_list').value;
+//create_list =  'folder/'+folder_id+'/list';
+create_task =  'list/'+list_id+'/task';
+
+let messageList = await browser.mailTabs.getSelectedMessages();
+if (messageList.messages.length == 0) {
+   swal(
+      'Error..!',
+      'Please Select least one email!',
+      'error'
+    );
+    return;
+}
+if (list_id == '') {
+    swal(
+      'Error..!',
+      'Please Select a List from drop-down!',
+      'error'
+    );
+
+    return;
+}
+
+
+
+await messageList.messages.forEach(function(item, index) {
+ getMsgFull(item.id).then(data => {
+ let emailBodyText = data.parts[0].parts[0].body;
+ let subjectTxt = data.headers.subject[0];
+// console.log(data.headers.subject[0]);
+// console.log(data);
+
+
+sendData = {
+  "name":subjectTxt,
+  "content":emailBodyText
+};
+
+
+//console.log(create_task);
+
+ postData(create_task, sendData)
+  .then(data => {
+console.log(data);
+if(data == undefined){
+  this.window.close();
+}else{
+alert('New task successfully created!');
+}
+});
+
+});
+});
+
+
+
+}
+
+
+/*
+* Search button by Tag
+*/
+document.getElementById("but_searchByTagName").onclick = async () => {
+let TEAM_ID = sessionStorage.getItem('TEAM_ID');
+ let custom_id = document.querySelector('#searchbytag_gettag_list').value;
+//  taskResults =  'task/'+custom_id+'?custom_task_ids=true&team_id='+TEAM_ID;
+taskResults =  'team/'+TEAM_ID+'/task?tags[0]='+custom_id;
+
+
+
+
+ if (custom_id == '') {
+    let option = document.createElement("P");
+  option.innerHTML =  '<span style="color: crimson">Please select a Tag first!</span>'; 
+  document.querySelector('#customIdTagList_results').innerHTML= option.innerHTML;
+  searchedResultsubmit.style.display = 'none';
+  return;
+}
+
+  getData(taskResults)
+    .then(data => {
+     document.querySelector("#customIdTagList_results").innerHTML = "";
+ 
+
+//console.log(data);
+
+if(data.tasks.length > 0){
+
+
+    data.tasks.forEach(function(item, index) { 
+
+let option = document.createElement("DIV");
+option.setAttribute("class", "radioItem"); 
+
+ let radioNo = document.createElement("input");  
+            radioNo.setAttribute("type", "radio");  
+            radioNo.setAttribute("id", "searchTagId"+item.id  );  
+            radioNo.setAttribute("name", "searchTagName" ); 
+            radioNo.setAttribute("value", item.id ); 
+
+ let lblNo = document.createElement("label");  
+  lblNo.setAttribute("for", "searchTagId"+item.id  ); 
+            lblNo.innerHTML =  item.name;  
+            option.appendChild(radioNo);  
+            option.appendChild(lblNo); 
+      document.querySelector('#customIdTagList_results').appendChild(option);
+      searchedResultsubmit.style.display = 'flex';
+
+
+});
+
+ }else{
+  let option = document.createElement("P");
+  option.innerHTML =  '<span style="color: #31871c">No matching results found!<span>'; 
+  document.querySelector('#customIdTagList_results').appendChild(option); 
+  searchedResultsubmit.style.display = 'none';
+ }
+
+      });
+
+
+
+}
+
+/* TAG - END*/
+
+
+
+
 
 
 /*
@@ -374,6 +765,10 @@ but_insideList.disabled = true;
 but_outsideList.disabled = true;
 but_seachTaskSubmit.disabled = true;
 
+listoutsideTagSearch.style.display = 'none';
+
+
+
 document.querySelector("#listOf_task").selectedIndex = 0;
 document.querySelector("#folderless_listOf_task").selectedIndex = 0;
 
@@ -389,7 +784,7 @@ document.querySelector("#folderless_listOf_task").selectedIndex = 0;
 but_insideList.disabled = true;
 but_outsideList.disabled = true;
 but_seachTaskSubmit.disabled = true;
-
+listoutsideTagSearch.style.display = 'none';
    
    }  else if( this.value === '3' ) {
   listsearchbyTask.style.display = 'block';
@@ -403,6 +798,30 @@ document.querySelector("#folderless_listOf_task").selectedIndex = 0;
 but_insideList.disabled = true;
 but_outsideList.disabled = true;
 but_seachTaskSubmit.disabled = false;
+listoutsideTagSearch.style.display = 'none';  
+
+
+
+   }  else if( this.value === '4' ) {
+    listoutsideTagSearch.style.display = 'block';
+  listsearchbyTask.style.display = 'none';
+  listinsidefolders.style.display = 'none';
+  listoutsidefolders.style.display = 'none';
+  but_insideList.classList.add('disabled');
+but_outsideList.classList.add('disabled');
+but_seachTaskSubmit.classList.remove('disabled');
+document.querySelector("#listOf_task").selectedIndex = 0;
+document.querySelector("#folderless_listOf_task").selectedIndex = 0;
+but_insideList.disabled = true;
+but_outsideList.disabled = true;
+but_seachTaskSubmit.disabled = false;
+
+
+
+
+
+
+
    }else{
     //default
      listinsidefolders.style.display = 'block';
@@ -527,7 +946,7 @@ let get_listOf_folders = 'space/'+space_id+'/folder?archived=false';
 
 
 /*
-* Dependant drop-down: Generation Spaces when page load : inside folders
+* Dependent drop-down: Generation Spaces when page load : inside folders
 */
 async function onLoadSpaces() {
   let TEAM_ID = sessionStorage.getItem('TEAM_ID');
