@@ -1,3 +1,15 @@
+# Conscious-ClickUp-Thunderbird-Plugin - DEAD
+## Conscious-ClickUp-Thunderbird-Plugin last version, v2, was released in 2022. The project was officially deprecated in 2025.
+## The project has not be maintained for years and must not be used anymore. All users must migrate to its direct successor [ClickUp-Mail-Sync-Thunderbird-Addon](https://github.com/Ruvin/ClickUp-Mail-Sync-Thunderbird-Addon/releases/latest) 
+
+
+
+
+
+
+<--------------------------------------- depreciated-------------------------------------------->
+
+
 ## ClickUp Thunderbird add-on
 
 ### What's in this repository 
